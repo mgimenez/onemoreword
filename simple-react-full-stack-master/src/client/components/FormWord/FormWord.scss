@@ -1,0 +1,17 @@
+.app-form-word {
+    background-color: rgba($color: #00dae8, $alpha: .5);
+    padding: 30px;
+    display: inline-block;
+
+    .app-form-word__input {
+        padding: 10px;
+        border: none;
+        width: 150px;
+        outline: none;
+    }
+    
+    .app-form-word__submit {
+        padding: 10px;
+        border: none;
+    }
+}

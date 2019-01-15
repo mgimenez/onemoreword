@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-import SentenceState from "./models/SentenceState";
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:3030');
 
-const state = SentenceState.create({
+import SentenceStore from "./models/SentenceState";
+
+const store = SentenceStore.create({
     sentence: '',
     word: ''
 })
-
-ReactDOM.render(<App state={state} />, document.getElementById('root'));
+store.socketListeners();
+ReactDOM.render(<App store={store} />, document.getElementById('root'));

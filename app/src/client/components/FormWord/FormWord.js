@@ -20,13 +20,13 @@ class FormWord extends Component {
     
 
     render() {
-        const { state } = this.props;
+        const { store } = this.props;
 
-        return (
-            <form className={"app-form-word " + (this.props.errorWord ? 'animated shake': ' ' )} 
+        return (    
+            <form className={"app-form-word " + (this.props.errorWord ? 'animated shake' : ' ')}
                 onSubmit={e => {
                     e.preventDefault();
-                    state.addWord(this.refs.inputWord.value);
+                    store.addWord(this.refs.inputWord.value);
                     this.refs.inputWord.value = ''
                 }}>
                 <input className="app-form-word__input" type="text" ref="inputWord" />

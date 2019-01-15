@@ -17,18 +17,18 @@ class Sentence extends Component {
     }
 
     componentDidUpdate() {
-        const { state } = this.props;
+        const { store } = this.props;
         setTimeout(() => {
-            state.hide();
+            store.hide();
         }, 3000);
     }
 
 
     render() {
-        const { state } = this.props;
+        const { store } = this.props;
         return (
             <div className="app-sentence">
-                { state.show ? state.sentence : '' }
+                { store.show ? store.sentence : '' }
             </div>
         )
     }

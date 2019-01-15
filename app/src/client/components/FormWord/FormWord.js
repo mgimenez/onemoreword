@@ -11,13 +11,11 @@ class FormWord extends Component {
 
     constructor(props) {
         super(props);
-    }
 
-    validate() {
-        
+        this.state = {
+            sentence: ''
+        }
     }
-
-    
 
     render() {
         const { store } = this.props;
@@ -26,10 +24,12 @@ class FormWord extends Component {
             <form className={"app-form-word " + (this.props.errorWord ? 'animated shake' : ' ')}
                 onSubmit={e => {
                     e.preventDefault();
-                    store.addWord(this.refs.inputWord.value);
-                    this.refs.inputWord.value = ''
+                    store.validateSentence(this.state.sentence);
+                    this.setState({
+                        sentence: ''
+                    })
                 }}>
-                <input className="app-form-word__input" type="text" ref="inputWord" />
+                <input className="app-form-word__input" type="text" value={this.state.sentence} onChange={e => this.setState({ sentence: e.target.value })}  />
                 <input className="app-form-word__submit" value="Send" type="submit" />
             </form>
         )

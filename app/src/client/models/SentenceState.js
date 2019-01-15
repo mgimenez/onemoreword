@@ -17,9 +17,12 @@ const SentenceStore = types
         validateUser(username) {
             socket.emit('validateUser', username);
         },
-        addWord(word) {
+        validateSentence(sentence) {
+            socket.emit('validateSentence', sentence);
+        },
+        addWord(sentence) {
             self.show = true;
-            self.sentence += ' ' + word;
+            self.sentence = sentence;
         },
 
         addUser(data) {
@@ -41,6 +44,13 @@ const SentenceStore = types
 
             socket.on('loginSuccess', data => {
                 self.addUser(data);
+            });
+            
+            socket.on('addWord', sentence => {
+                self.addWord(sentence);
+            });
+            socket.on('gameOver', () => {
+                alert('game over');
             });
         },
         updateUsers(data) {

@@ -3,7 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const os = require('os');
 const io = require('socket.io')();
-var str = [];
+var words = [];
 var userList = [];
 var userCount = 0;
 
@@ -62,6 +62,31 @@ io.on('connection', (socket) => {
             socket.emit('loginError', {
                 username: username
             });
+        }
+
+    });
+
+
+    socket.on('validateSentence', (sentence) => {
+        let sentenceSplitted = sentence.split(' '),
+            lastWord = sentenceSplitted[sentenceSplitted.length - 1];
+
+        if (words.length === 0) {
+            words.push(lastWord);
+            let completeSentence = words.join(',').split(',').join(' ');
+            io.emit('addWord', completeSentence);
+        } else {
+            let sentenceWithoutLastWord = sentenceSplitted;
+            sentenceWithoutLastWord.length = sentenceWithoutLastWord.length - 1;
+            
+            if (arraysIdentical(sentenceSplitted, sentenceWithoutLastWord)) {
+                words.push(lastWord);
+                let completeSentence = words.join(',').split(',').join(' ');
+                io.emit('addWord', completeSentence);
+                console.log(lastWord, completeSentence, sentenceSplitted, sentenceWithoutLastWord);
+            } else {
+                io.emit('gameOver');
+            }
         }
 
     });

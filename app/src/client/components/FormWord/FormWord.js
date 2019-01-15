@@ -5,15 +5,30 @@ import './FormWord.scss';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import { observer } from 'mobx-react';
+
 class FormWord extends Component {
 
     constructor(props) {
         super(props);
     }
 
+    validate() {
+        
+    }
+
+    
+
     render() {
+        const { state } = this.props;
+
         return (
-            <form className={"app-form-word " + (this.props.errorWord ? 'animated shake': ' ' )} onSubmit={(e) => this.props.addWord(e, this.refs.inputWord)}>
+            <form className={"app-form-word " + (this.props.errorWord ? 'animated shake': ' ' )} 
+                onSubmit={e => {
+                    e.preventDefault();
+                    state.addWord(this.refs.inputWord.value);
+                    this.refs.inputWord.value = ''
+                }}>
                 <input className="app-form-word__input" type="text" ref="inputWord" />
                 <input className="app-form-word__submit" value="Send" type="submit" />
             </form>
@@ -21,4 +36,4 @@ class FormWord extends Component {
     }
 }
 
-export default FormWord;
+export default observer(FormWord);

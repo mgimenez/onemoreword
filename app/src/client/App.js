@@ -18,8 +18,6 @@ class App extends Component {
       word: '',
       errorWord: false
     }
-
-    this.addWord = this.addWord.bind(this);
   }
 
   componentDidMount() {
@@ -31,21 +29,6 @@ class App extends Component {
       });
 
     });
-  }
-
-  addWord(e, inputWord) {
-    e.preventDefault();
-    if(this.validate(inputWord.value)) {
-      this.setState({
-        sentence: this.state.sentence + ' ' + inputWord.value
-      });
-    } else {
-      this.setState({
-        errorWord: true
-      })
-    }
-
-    inputWord.value = '';
   }
   
 
@@ -84,8 +67,8 @@ class App extends Component {
     return (
       <div className="app-wrapper">
         <Header />
-        <Sentence sentence={this.state.sentence} />
-        <FormWord sentence={this.state.sentence} addWord={this.addWord} word={this.state.word} errorWord={this.state.errorWord} />
+        <Sentence state={this.props.state} sentence={this.state.sentence} />
+        <FormWord state={this.props.state} sentence={this.state.sentence} addWord={this.addWord} word={this.state.word} errorWord={this.state.errorWord} />
       </div>
     )
   }

@@ -49,19 +49,30 @@ const SentenceStore = types
             socket.on('addWord', sentence => {
                 self.addWord(sentence);
             });
-            socket.on('gameOver', () => {
-                alert('game over');
+            socket.on('gameOver', (username) => {
+                if (self.username === username) {
+                    alert('game over ' + username);
+                }
+                self.removeUser(username);
             });
         },
         updateUsers(data) {
             let usersList = data.userList.filter(u => u != self.username);
-            self.users = usersList;
+            console.log('updateUsers()', usersList);
+            self.users = usersList.slice();
             self.userCount = data.userCount;
         },
         removeUser(username) {
             let index = self.users.indexOf(username);
             let users = self.users.splice(index, 1);
-            self.updateUsers(users);
+            
+            let data = {
+                userCount: self.userCount - 1,
+                username: self.username,
+                userList: users
+            }
+            console.log('remove', username, 'full list', self.users, 'updated list', users, data);
+            self.updateUsers(data);
         },
         hide() {
             self.show = false;

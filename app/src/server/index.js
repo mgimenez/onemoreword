@@ -15,7 +15,6 @@ io.on('connection', (socket) => {
     
     var addedUser = false;
 
-    // console.log('a user connected');
 
     socket.on('addUser', (username) => {
 
@@ -77,15 +76,16 @@ io.on('connection', (socket) => {
             io.emit('addWord', completeSentence);
         } else {
             let sentenceWithoutLastWord = sentenceSplitted;
+            // let completeSentence = words.join(',').split(',').join(' ');
             sentenceWithoutLastWord.length = sentenceWithoutLastWord.length - 1;
-            
-            if (arraysIdentical(sentenceSplitted, sentenceWithoutLastWord)) {
+            console.log(sentenceWithoutLastWord, words);
+            if (arraysIdentical(sentenceSplitted, words)) {
                 words.push(lastWord);
                 let completeSentence = words.join(',').split(',').join(' ');
                 io.emit('addWord', completeSentence);
                 console.log(lastWord, completeSentence, sentenceSplitted, sentenceWithoutLastWord);
             } else {
-                io.emit('gameOver');
+                io.emit('gameOver', socket.username);
             }
         }
 

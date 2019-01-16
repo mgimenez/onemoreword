@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
                     userList.splice(i, 1);
                 }
             }
-
+console.log('disco')
             // echo globally that this client has left
             socket.broadcast.emit('userLeft', {
                 username: socket.username,

@@ -52,14 +52,15 @@ const SentenceStore = types
             socket.on('gameOver', (username) => {
                 if (self.username === username) {
                     alert('game over ' + username);
+                    socket.emit('disconnect');
                 }
                 self.removeUser(username);
             });
         },
         updateUsers(data) {
             let usersList = data.userList.filter(u => u != self.username);
-            console.log('updateUsers()', usersList);
-            self.users = usersList.slice();
+            self.users = usersList;
+            // console.log('updateUsers()', usersList, 'full list', self.users);
             self.userCount = data.userCount;
         },
         removeUser(username) {
@@ -71,7 +72,7 @@ const SentenceStore = types
                 username: self.username,
                 userList: users
             }
-            console.log('remove', username, 'full list', self.users, 'updated list', users, data);
+            console.log('username to remove', username, 'full list', self.users, 'updated list', users, data);
             self.updateUsers(data);
         },
         hide() {

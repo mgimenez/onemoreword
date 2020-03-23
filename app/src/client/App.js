@@ -44,11 +44,13 @@ class App extends Component {
       <div className="app-wrapper">
         <Header />
         <FormLogin userStore={userStore} />
+        <UserList userStore={userStore} />
+
         {
           userStore.loggedIn &&
 
           <div>
-            <UserList userStore={userStore} />
+            
             <Sentence sentenceStore={sentenceStore} />
             <FormWord sentenceStore={sentenceStore} />
           </div>

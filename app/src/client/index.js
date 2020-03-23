@@ -11,6 +11,7 @@ import UserStore from "./models/UserState";
 const store = {
     user: UserStore.create({
         loginError: false,
+        loggedIn: false,
         errorMessage: '',
         users: [],
         username: '',

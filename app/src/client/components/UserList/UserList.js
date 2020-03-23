@@ -24,11 +24,16 @@ class UserList extends Component {
                     {
                         userStore.users.map(function (item, i) {
                             return (
-                                <li className={i === 0 ? 'current-user' : ''} key={i}>
-                                    {item} 
+                                <React.Fragment key={i}>
+                                    {
+                                        item !== '' && 
+                                        <li className={i === 0 ? 'current-user' : ''} >
+                                            {item} 
 
-                                    { i === 0 && <span>(You)</span>}
-                                </li>
+                                            { i === 0 && <span>(You)</span>}
+                                        </li>
+                                    }
+                                </React.Fragment>
                             )
                         })
                     }

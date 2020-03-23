@@ -23,6 +23,7 @@ io.on('connection', (socket) => {
         socket.username = username;
         socket.userList = userList.push(username);
         addedUser = true;
+        
         socket.emit('login', {
             userCount: userCount,
             username: username,
@@ -35,17 +36,6 @@ io.on('connection', (socket) => {
             userList: userList
         });
     });
-
-    // socket.on('showLoginError', (data) => {
-    // console.log('on showLoginError');
-    
-    //     socket.username = data.udsername;
-    //     socket.loginError = data.loginError;
-    //     socket.errorMessage = data.message;
-
-    // })
-
-
 
     socket.on('validateUser', (username) => {
         console.log(username)

@@ -6,10 +6,23 @@ import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:3030');
 
 import SentenceStore from "./models/SentenceState";
+import UserStore from "./models/UserState";
 
-const store = SentenceStore.create({
-    sentence: '',
-    word: ''
-})
-store.socketListeners();
-ReactDOM.render(<App store={store} />, document.getElementById('root'));
+const store = {
+    user: UserStore.create({
+        loginError: false,
+        errorMessage: '',
+        users: [],
+        username: '',
+        userCount: 0,
+    }),
+    sentence: SentenceStore.create({
+        sentence: '',
+        word: '',
+        show: false,
+        error: false
+    })
+};
+store.user.socketListeners();
+store.sentence.socketListeners();
+ReactDOM.render(<App userStore={store.user} sentenceStore={store.sentence} />, document.getElementById('root'));

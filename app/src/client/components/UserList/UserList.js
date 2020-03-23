@@ -1,7 +1,7 @@
 
 import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:3030');
-// import './FormLogin.scss';
+import './UserList.scss';
 
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
@@ -15,15 +15,21 @@ class UserList extends Component {
 
 
     render() {
-        const { store } = this.props;
+        const { userStore } = this.props;
 
         return (
             <div>
-                <span>Users: ({store.userCount})</span>
+                <span>Users: ({userStore.userCount})</span>
                 <ul className="app-user-list">
                     {
-                        store.users.map(function (item, i) {
-                            return <li key={i}>{item}</li>
+                        userStore.users.map(function (item, i) {
+                            return (
+                                <li className={i === 0 ? 'current-user' : ''} key={i}>
+                                    {item} 
+
+                                    { i === 0 && <span>(You)</span>}
+                                </li>
+                            )
                         })
                     }
                 </ul>

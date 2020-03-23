@@ -3,6 +3,7 @@ const app = express();
 const http = require('http').Server(app);
 const os = require('os');
 const io = require('socket.io')();
+
 var words = [];
 var userList = [];
 var userCount = 0;
@@ -35,36 +36,47 @@ io.on('connection', (socket) => {
         });
     });
 
+    // socket.on('showLoginError', (data) => {
+    // console.log('on showLoginError');
+    
+    //     socket.username = data.udsername;
+    //     socket.loginError = data.loginError;
+    //     socket.errorMessage = data.message;
+
+    // })
+
+
+
     socket.on('validateUser', (username) => {
-        let loginError = false;
+        console.log(username)
+        let loginError = {
+            status: false,
+            message: ''
+        }
 
         for (i = 0; i < userList.length; i++) {
+            
             if (username === userList[i]) {
-                loginError = true;
-                // if (username === usernamePrev) {
-                //     socket.emit('UserExistent', {
-                //         username: username
-                //     });
-                // } else {
-                //     socket.emit('loginError', {
-                //         username: username
-                //     });
-                // }
+                console.log('iguales!');
+                loginError = {
+                    status: true,
+                    message: 'UserExistent'
+                }
             }
         }
 
-        if (!loginError) {
+        if (!loginError.status) {
             socket.emit('loginSuccess', {
                 username: username
             });
         } else {
             socket.emit('loginError', {
-                username: username
+                username: username,
+                message: loginError.message
             });
         }
 
     });
-
 
     socket.on('validateSentence', (sentence) => {
         let sentenceSplitted = sentence.split(' '),
@@ -103,7 +115,7 @@ io.on('connection', (socket) => {
                     userList.splice(i, 1);
                 }
             }
-console.log('disco')
+            console.log('disconnect')
             // echo globally that this client has left
             socket.broadcast.emit('userLeft', {
                 username: socket.username,

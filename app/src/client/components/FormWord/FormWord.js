@@ -18,13 +18,13 @@ class FormWord extends Component {
     }
 
     render() {
-        const { store } = this.props;
+        const { sentenceStore } = this.props;
 
         return (    
             <form className={"app-form-word " + (this.props.errorWord ? 'animated shake' : ' ')}
                 onSubmit={e => {
                     e.preventDefault();
-                    store.validateSentence(this.state.sentence);
+                    sentenceStore.validateSentence(this.state.sentence);
                     this.setState({
                         sentence: ''
                     })

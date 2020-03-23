@@ -38,24 +38,21 @@ class App extends Component {
 
   render() {
 
-    let { store } = this.props;
+    let { sentenceStore, userStore } = this.props;
 
     return (
       <div className="app-wrapper">
-        <Header store={store} />
+        <Header />
+        <FormLogin userStore={userStore} />
         {
-          store.username === '' ?
-          <FormLogin store={store} />
-          :
+          userStore.loggedIn &&
+
           <div>
-            <UserList store={store} />
-            <Sentence store={store} />
-            <FormWord store={store} />
+            <UserList userStore={userStore} />
+            <Sentence sentenceStore={sentenceStore} />
+            <FormWord sentenceStore={sentenceStore} />
           </div>
         }
-        
-        
-        
       </div>
     )
   }
